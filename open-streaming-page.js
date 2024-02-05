@@ -54,6 +54,6 @@ if (role === "dashboard") {
   const baseLink = `http://localhost:3000/domain/admin-account.localhost/manage/`;
   const secretKey = secretKeys[webinarType][role];
 
-  const link = `${baseLink}${secretKey}/${isDryRun ? "dry-run" : ""}`;
+  const link = `${baseLink}${secretKey}/${isDryRun ? "dry_run" : ""}`;
   openInArc(link);
 }
