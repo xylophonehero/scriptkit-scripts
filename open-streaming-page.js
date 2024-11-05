@@ -12,19 +12,29 @@ const openInArc = (link) =>
 
 const secretKeys = {
   webrtc: {
-    presenter: "2D7leZQmqMGh5OolrHvxqsE9mdehQo4fCImfHCv0_iI",
-    copresenter: "a3FRGLgJpK3HiH8TLcBLob5tjo9hGj8E8dComEkQx2E",
-    moderator: "YGVmcrkmVLOEVOIPIh_K3qS4p03u7KkHqNJqE_6MiS8",
-    hostsOnly: "UVr5bAsprx3mw40jXvD_izO9jHoNaFUIEva7emyrj8I",
-    operator: "UIERHqaafFY0lLpIHFcv5GqnEB59RWNT38p0s-PtFd0",
-    "2ndCopresenter": "fmxPiJtLqKCXMQ2u5tsYvGCxkMntJgB8p-rLY6C6cRo",
-    dashboard: 42,
+    presenter: "EWgfbipnNT7F7h2wCYHKmEh0uLRYza6hz-kTdUjFYKU",
+    copresenter: "9-QGn37ur8u5ixBsGBVQGty6238KRTBhSOxKwk7S4WI",
+    moderator: "z1wBLHkmzZ08G0jzbC9TqyEdtHXBIbtscLzQWgUNbN8",
+    operator: "XQ3Re10sX7jm8ge5_4WLoblZfIbZR1f9qWS-9U-p18A",
+    "2ndCopresenter": "mb2GIY3OuiuXoJhmssZf3WFDaciL6D70yndGXSSGJPI",
+    dashboard: 1,
+    viewer: "Vzkh894iD1vTszlzM0c36F_qk2-vNyyNA0UNoCGihZY",
+    registraion: 1,
   },
   rtmp: {
-    presenter: "k-Cgc2_pumDYrgmLsvvVi0KKgoq1lIfK9LmWFrW0wSs",
-    moderator: "Y8WEAS0d1S8kn2H7omCETy-gcYgMvynpvfoUd2wUwOc",
-    dashboard: 13,
+    presenter: "cXi50v6DgwNscYYsoXzNP4G0BLp3HnAaFBVY6gqDPQM",
+    moderator: "iOQqGPPDeeOlWPBdqs90dssCCeXJZTPbN9v7nAUPoPo",
+    dashboard: 4,
   },
+  superAdmin:{
+    local: 'http://localhost:3000/super_admin',
+    prod: 'https://app.webinargeek.com/super_admin',
+    staging: 'https://app.qwebinar.nl/super_admin',
+  },
+  // automated: {
+  //   moderator: "_ZfX2TnaQcIVagKxdo6fjGckfQhEtQL8wRmXcsaU13Q",
+  //   dashboard: 7,
+  // },
 };
 
 const makeOptions = (opt) => {
@@ -44,8 +54,16 @@ const role = await arg(
   Object.keys(secretKeys[webinarType]).map(makeOptions),
 );
 
-if (role === "dashboard") {
+if (webinarType === 'superAdmin') {
+  openInArc(secretKeys[webinarType][role]);
+} else if (role === "dashboard") {
   const link = `http://localhost:3000/admin/episodes/${secretKeys[webinarType].dashboard}`;
+  openInArc(link)
+} else if (role === "registraion") {
+  const link = `http://localhost:3000/admin/episodes/${secretKeys[webinarType].dashboard}/registration_page/edit_template`;
+  openInArc(link);
+} else if (role === "viewer") {
+  const link = `http://localhost:3000/domain/admin-account.localhost/watch/${secretKeys[webinarType][role]}/`;
   openInArc(link);
 } else {
   const isDryRun =
